@@ -64,8 +64,16 @@ func (h *AuthHandler) GoogleLogin(c *gin.Context) {
 		return
 	}
 
-	clientID := os.Getenv("GOOGLE_CLIENT_ID")
+	clientID := os.Getenv("GOOGLE_IOS_CLIENT_ID")
 	payload, err := idtoken.Validate(c.Request.Context(), req.IDToken, clientID)
+	if err != nil {
+		// Try Android Client ID
+		androidClientID := os.Getenv("GOOGLE_ANDROID_CLIENT_ID")
+		if androidClientID != "" {
+			payload, err = idtoken.Validate(c.Request.Context(), req.IDToken, androidClientID)
+		}
+	}
+
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "invalid google token"})
 		return
