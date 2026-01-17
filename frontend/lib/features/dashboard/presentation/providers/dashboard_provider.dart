@@ -26,7 +26,7 @@ class DashboardNotifier extends StateNotifier<AsyncValue<DashboardStats>> {
     if (_userId == null) return;
     try {
       state = const AsyncValue.loading();
-      final data = await _apiService.getDashboardStats(_userId!);
+      final data = await _apiService.getDashboardStats(_userId);
       final stats = DashboardStats.fromMap(data);
       state = AsyncValue.data(stats);
     } catch (e, st) {
