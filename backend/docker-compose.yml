@@ -14,7 +14,8 @@ services:
       - JWT_SECRET=${JWT_SECRET}
       - ENV=production
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     networks:
       - rented-net
 
@@ -28,6 +29,11 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     networks:
       - rented-net
 
