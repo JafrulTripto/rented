@@ -53,5 +53,5 @@ func main() {
 		dashboardHandler,
 	)
 
-	log.Fatal(r.Run(":8080"))
+	log.Fatal(r.Run(":" + cfg.AppPort))
 }

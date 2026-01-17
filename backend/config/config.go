@@ -23,7 +23,7 @@ func LoadConfig() (*Config, error) {
 	_ = godotenv.Load()
 
 	config := &Config{
-		AppPort:    getEnv("APP_PORT", "8080"),
+		AppPort:    getEnv("PORT", "8080"),
 		DBHost:     getEnv("DB_HOST", "localhost"),
 		DBUser:     getEnv("DB_USER", "postgres"),
 		DBPassword: getEnv("DB_PASSWORD", "password"),
